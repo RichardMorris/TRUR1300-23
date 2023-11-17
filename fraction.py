@@ -1,4 +1,7 @@
 class fraction:
+    ''' This is a class to to represent a fraction.
+    It always reduces the fraction to its simplest form
+    '''
 
     def __init__(self, numerator, denominator): # constructor used to create the object​
         self._num = numerator # private fields, prevent modification
