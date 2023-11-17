@@ -3,11 +3,21 @@ Code for the TRUR1300 Software Development Practices unit 2023-24
 
 # Setting up VS-Code with git
 
-From software centre install the VS Code and Git applications
+1. From software centre install the `VS Code` and `Git` applications.
 
-Run VS Code
+2. Create a repository in GitHub. You should be able to find a `New` button somewhere on the repositories tab. It will be easier if you tick the `create readme` checkbox. Set .gitignore to Python may help. 
 
-Set your username and email address
+3. Copy the URL for the repository. Select the green `<> Code` button and the Local tab. It should be something like
+
+    https://github.com/RichardMorris/FooBar.git
+
+4. Run VS Code
+
+5. 
+
+5. Set your username and email address
+
+Open the terminal at the bottom and type two lines similar to 
 
     git config user.name "Richard Morris"
     git config user.email "rich@singsurf.org"
