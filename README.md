@@ -16,15 +16,21 @@ This needs to be done on a per-project basis as we can't write the standard file
 At home you would use the `--global` option for both.
 
 
-Go to https://github.com/settings/tokens 
-
-Generate a Personal Access Token with the repo scope. These are like passwords but with finer grained access.
 
 In the Source control tab hover over the file you want to change, and press +, this stages the file ready to be committed.
 
 Add a brief description of the change in source control.
 
 Press the Commit button, this updates the local git repository. 
+
+Press Sync Changes to send your changes upto github. 
+
+It will ask for some check on cedentials. Well use a Personal Access Token with the repo scope. These are like passwords but with finer grained access.
+
+Go to https://github.com/settings/tokens 
+
+Generate a Personal Access Token with the repo scope. 
+
 
 
 
