@@ -1,22 +1,86 @@
 class Room:
-    def __init__(self, descript,game): # constructor used to create the object​
-        self._description = descript # private fields, prevent modification
+    # constructor used to create the object​
+    # first parameter is a reference to the current object
+    # The second refers to the whole game, 
+    # the third is a description of the room
+    def __init__(self, game, descript): 
         self._game = game # a back reference to the whole game
+        self._description = descript # description of the room
 
-    def enter(self): # method run when we first enter a room
+    # method run when we first enter a room
+    # default implementation just prints the description
+    def enter(self): 
         print(self._description)
 
+    def processInput(self,command): # handle user input for this room
+        pass # do nothing by default
 
-    def processInput(self,command): 
-        pass
+# a subclass of Room, this has posible exits N S E W
+# inherits all its methods and fields from Room
+class RoomWithExits(Room): 
+    def __init__(self, game, descript):
+        super().__init__(game,descript) # call the constructor of the parent class
+        self._north = None # possible exit to the north, set to nothing by default
+        self._south = None
+        self._east = None
+        self._west = None
 
+    def setNorth(self, room): # set the room to the north
+        self._north = room
+
+    def setSouth(self, room): # set the room to the south
+        self._south = room
+
+    def setEast(self, room): # set the room to the east
+        self._east = room
+
+    def setWest(self, room): # set the room to the west
+        self._west = room
+
+    def enter(self): # override the enter method from the parent class
+        super().enter()
+        if self._north != None:
+            print("There is a door to the north.")
+        if self._south != None:
+            print("There is a door to the south.")
+        if self._east != None:
+            print("There is a door to the east.")
+        if self._west != None:
+            print("There is a door to the west.")
+
+    def processInput(self,command): # override the processInput method from the parent class
+        if command == "north" and self._north != None:
+            self._game.moveToRoom(self._north)
+        elif command == "south" and self._south != None:
+            self._game.moveToRoom(self._south)
+        elif command == "east" and self._east != None:
+            self._game.moveToRoom(self._east)
+        elif command == "west" and self._west != None:
+            self._game.moveToRoom(self._west)
+        else:
+            super().processInput(command)
+            
 class Game: # represents the whole game
-
-    def __init__(self):
-        self.currentRoom = Room("The enterance to the world",self)
+    # Constructor, sets up the game
+    def __init__(self): 
+        room1 = RoomWithExits(self,"A small room")
+        room2 = RoomWithExits(self,"A large room")
+        room1.setNorth(room2)
+        room2.setSouth(room1)
+        self.rooms = [room1, room2]
+        self.currentRoom = self.rooms[0]
         self.currentRoom.enter()
 
-    def mainLoop(self):
+    # move to a new room
+    def moveToRoom(self, room): 
+        self.currentRoom = room
+        self.currentRoom.enter()
+
+    # Main game loop
+    # repeatidly asks for input 
+    # the input is then processed by the current room
+    # typing exit allows the user to leave the game   
+    def mainLoop(self): 
         while True:
             command = input("What do you want to do? ")
             if command == "exit":
@@ -24,7 +88,7 @@ class Game: # represents the whole game
                 break;
             self.currentRoom.processInput(command)
 
-
+# entry point of the program
 if __name__ == "__main__":
-    app = Game()
-    app.mainLoop()
+    app = Game()    # create a new game
+    app.mainLoop()  # start the game loop
