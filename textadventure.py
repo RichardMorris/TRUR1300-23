@@ -22,8 +22,6 @@ class RoomWithExits(Room):
         super().__init__(game,descript) # call the constructor of the parent class
         self._north = None # possible exit to the north, set to nothing by default
         self._south = None
-        self._east = None
-        self._west = None
 
     def setNorth(self, room): # set the room to the north
         self._north = room
@@ -31,32 +29,18 @@ class RoomWithExits(Room):
     def setSouth(self, room): # set the room to the south
         self._south = room
 
-    def setEast(self, room): # set the room to the east
-        self._east = room
-
-    def setWest(self, room): # set the room to the west
-        self._west = room
-
     def enter(self): # override the enter method from the parent class
         super().enter()
         if self._north != None:
             print("There is a door to the north.")
         if self._south != None:
             print("There is a door to the south.")
-        if self._east != None:
-            print("There is a door to the east.")
-        if self._west != None:
-            print("There is a door to the west.")
 
     def processInput(self,command): # override the processInput method from the parent class
         if command == "north" and self._north != None:
             self._game.moveToRoom(self._north)
         elif command == "south" and self._south != None:
             self._game.moveToRoom(self._south)
-        elif command == "east" and self._east != None:
-            self._game.moveToRoom(self._east)
-        elif command == "west" and self._west != None:
-            self._game.moveToRoom(self._west)
         else:
             super().processInput(command)
             
