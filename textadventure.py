@@ -49,8 +49,11 @@ class Game: # represents the whole game
     def __init__(self): 
         room1 = RoomWithExits(self,"A small room")
         room2 = RoomWithExits(self,"A large room")
+        room3 = RoomWithExits(self,"A tiny room")
         room1.setNorth(room2)
         room2.setSouth(room1)
+        room2.setNorth(room3)
+        room3.setSouth(room2)
         self.rooms = [room1, room2]
         self.currentRoom = self.rooms[0]
         self.currentRoom.enter()
