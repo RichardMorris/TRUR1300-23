@@ -113,6 +113,71 @@ class TestRoomWithExits(unittest.TestCase):
             self.assertEqual(None, room.processInput("north"))
             game.moveToRoom.assert_called_with(room2) # check that the method was called with the correct parameter
 
+class TestChest(unittest.TestCase):
+    def test_chest_can_be_constructed_with_initial_start_state(self):
+        chest = KnockThreeTimesChest()
+        self.assertEqual(ChestState.START,chest.state)
+
+    def test_chest_knocked_once_has_state_once(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("knock")
+        self.assertEqual(ChestState.ONCE,chest.state)
+
+    def test_chest_knocked_twice_has_state_twice(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("knock")
+        chest.processInput("knock")
+        self.assertEqual(ChestState.TWICE,chest.state)
+
+    def test_chest_knocked_threetimes_has_state_thrice(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("knock")
+        chest.processInput("knock")
+        chest.processInput("knock")
+        self.assertEqual(ChestState.THRICE,chest.state)
+    
+    def test_chest_stays_in_start_state_on_other_input(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("open")
+        self.assertEqual(ChestState.START,chest.state)
+    
+    def test_chest_in_once_state_goes_back_to_start_state_on_other_input(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("knock")
+        self.assertEqual(ChestState.ONCE,chest.state)
+        chest.processInput("open")
+        self.assertEqual(ChestState.START,chest.state)
+
+    def test_chest_in_twice_state_goes_back_to_start_state_on_other_input(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("knock")
+        chest.processInput("knock")
+        self.assertEqual(ChestState.TWICE,chest.state) # check precondition
+        chest.processInput("open")
+        self.assertEqual(ChestState.START,chest.state)
+
+    def test_chest_in_thrice_state_goes_back_to_start_state_on_other_input(self):
+        chest = KnockThreeTimesChest()
+        chest.processInput("knock")
+        chest.processInput("knock")
+        chest.processInput("knock")
+        self.assertEqual(ChestState.THRICE,chest.state)
+        chest.processInput("open")
+        self.assertEqual(ChestState.START,chest.state)
+
+class TestRoomWithChest(unittest.TestCase):
+    def test_a_room_with_a_chest_can_be_constructed(self):
+        room = RoomWithChest(None,"There is a chest")
+
+    def test_a_room_with_a_chest_has_chest_state_start(self):
+        room = RoomWithChest(None,"There is a chest")
+        self.assertEqual(ChestState.START,room._chest.state)
+
+    def test_a_room_with_a_chest_accepts_a_knock_setting_state_to_once(self):
+        room = RoomWithChest(None,"There is a chest")
+        room.processInput("knock")
+        self.assertEqual(ChestState.ONCE,room._chest.state)
+
 
 
 if __name__ == '__main__':
