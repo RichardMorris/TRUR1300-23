@@ -1,3 +1,5 @@
+from enum import Enum
+
 class Room:
     # constructor used to create the object​
     # first parameter is a reference to the current object
@@ -43,14 +45,54 @@ class RoomWithExits(Room):
             self._game.moveToRoom(self._south)
         else:
             super().processInput(command)
+class ChestState(Enum):        
+    START = 0
+    ONCE = 1
+    TWICE = 2
+    THRICE = 3
+
+class KnockThreeTimesChest:
+    state = ChestState.START
+
+    def __init__(self) -> None:
+        pass               
+
+    def processInput(self,command):
+        if command == "knock":
+            if self.state == ChestState.START:
+                print("You knock once")
+                self.state = ChestState.ONCE
+            elif self.state == ChestState.ONCE:
+                print("You knock twice")
+                self.state = ChestState.TWICE
+            elif self.state == ChestState.TWICE:
+                print("The chest opens")
+                self.state = ChestState.THRICE
+        else:
+            print("The chest resets")
+            self.state = ChestState.START
             
+    
+
+class RoomWithChest(Room):
+    def __init__(self, game, descript):
+        super().__init__(game,descript) # call the constructor of the parent class
+        self._chest = KnockThreeTimesChest()
+
+    def processInput(self,command): # override the processInput method from the parent class
+        self._chest.processInput(command)
+        super().processInput(command)
+
 class Game: # represents the whole game
     # Constructor, sets up the game
     def __init__(self): 
         room1 = RoomWithExits(self,"A small room")
         room2 = RoomWithExits(self,"A large room")
+        room3 = RoomWithExits(self,"A tiny room")
         room1.setNorth(room2)
         room2.setSouth(room1)
+        room2.setNorth(room3)
+        room3.setSouth(room2)
         self.rooms = [room1, room2]
         self.currentRoom = self.rooms[0]
         self.currentRoom.enter()
