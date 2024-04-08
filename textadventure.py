@@ -17,6 +17,12 @@ class Room:
     def processInput(self,command): # handle user input for this room
         pass # do nothing by default
 
+#class RichRoom(Room):
+#    def enter(self): # override the enter method from the parent class
+#        super().enter()
+
+
+
 # a subclass of Room, this has posible exits N S E W
 # inherits all its methods and fields from Room
 class RoomWithExits(Room): 
