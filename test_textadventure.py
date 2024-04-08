@@ -6,6 +6,16 @@ from unittest.mock import Mock
 
 from textadventure import *
 
+class RichRoomTest(unittest.TestCase):
+    def test_a_rich_room_can_be_created(self):
+        room = RichRoom(None)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+# can ignore the rest
+    
 class TestRoom(unittest.TestCase):
     def test_a_room_can_be_created(self):
         room = Room(None, "A small room")
@@ -114,6 +124,3 @@ class TestRoomWithExits(unittest.TestCase):
             game.moveToRoom.assert_called_with(room2) # check that the method was called with the correct parameter
 
 
-
-if __name__ == '__main__':
-    unittest.main()
