@@ -3,9 +3,19 @@ import io
 import contextlib
 import sys
 from unittest.mock import Mock
-
 from textadventure import *
 
+if __name__ == '__main__':
+    unittest.main()
+
+# A simple test for a simple room
+
+class RichRoomTest(unittest.TestCase):
+    def test_a_rich_room_can_be_created(self):
+        room = RichRoom(None)
+
+# Further tests for trying to cover every type of usage
+    
 class TestRoom(unittest.TestCase):
     def test_a_room_can_be_created(self):
         room = Room(None, "A small room")
@@ -179,6 +189,3 @@ class TestRoomWithChest(unittest.TestCase):
         self.assertEqual(ChestState.ONCE,room._chest.state)
 
 
-
-if __name__ == '__main__':
-    unittest.main()
